@@ -1,9 +1,10 @@
 /* 
  * Simple cpu bench
  * Fredrik B (info@freshbit.se)
+ * adding modifications by @joelondev
  */
 
-#include "cpu.h"
+#include "cpu.h" /* this header includes prototypes used*/
 
 unsigned long long _prime_count = 0;
 unsigned long long _total_count = 0;
