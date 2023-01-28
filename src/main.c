@@ -17,7 +17,8 @@ pthread_mutex_t _total_count_lock;
 void print_header() 
 {
 	printf("\nsimple cpu benchmark\n");
-	printf("freshbit.se\n\n");
+	printf(" by freshbit being moded by joelondev\n\n");
+	printf("\nchecks the number of threads the platform runs on\n");
 	fflush(stdout);
 }
 
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
 	print_header();
 
 	unsigned long long big_number = DEFAULT_NUMBER;
-	int number_of_threads = get_processor_count();
+	int number_of_threads = get_processor_count(); /*this picks the number of threads the cpu uses*/
 
 	if (argc > 1)
 		parse_args(argc, argv, &big_number, &number_of_threads);
