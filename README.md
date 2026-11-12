@@ -1,5 +1,7 @@
 # PartumTestKit
 
+[![Windows build](https://github.com/joelondev/simple-cpu-test/actions/workflows/windows.yml/badge.svg)](https://github.com/joelondev/simple-cpu-test/actions/workflows/windows.yml)
+
 A small, Cinebench-style CPU benchmark written in C. It runs three
 deterministic workloads and reports single-threaded and multi-threaded
 scores so you can compare machines, cooling, power modes, or settings.
@@ -35,7 +37,22 @@ gcc   src/*.c -O2 -lm -lpthread -o partumtestkit
 ```
 
 Prebuilt macOS binaries live in `bin/macOS-arm64/` and `bin/macOS-x86-64/`.
-On Windows, build `src/*.c` with MSVC or clang-cl.
+
+### Windows
+
+From an **x64 Native Tools Command Prompt for VS**:
+
+```bat
+build.bat
+build.bat test
+```
+
+`build.bat` uses MSVC (`cl`) when available and falls back to `clang-cl`.
+It writes `partumtestkit.exe` and puts intermediate objects in `build\`.
+
+The workflow in `.github/workflows/windows.yml` builds and smoke-tests the
+`.exe` on `windows-latest` for every push and pull request, validates the
+JSON output, and uploads the executable plus a JSON result as an artifact.
 
 ## Usage
 

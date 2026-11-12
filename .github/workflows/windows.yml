@@ -1,0 +1,52 @@
+name: Windows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Build
+        shell: cmd
+        run: build.bat
+
+      - name: Quick smoke test
+        shell: cmd
+        run: partumtestkit.exe --quick -r 1
+
+      - name: Full benchmark (JSON)
+        shell: cmd
+        run: partumtestkit.exe --json -r 1 > result.json
+
+      - name: Validate JSON
+        shell: pwsh
+        run: |
+          $result = Get-Content result.json -Raw | ConvertFrom-Json
+          if ($result.tool -ne 'PartumTestKit') { throw 'unexpected tool name' }
+          if ($result.partum_score -le 0) { throw 'invalid score' }
+          Write-Host "Partum Score: $($result.partum_score)"
+          Write-Host "CPU: $($result.cpu)"
+
+      - name: Upload executable and result
+        uses: actions/upload-artifact@v4
+        with:
+          name: partumtestkit-windows-x64
+          path: |
+            partumtestkit.exe
+            result.json

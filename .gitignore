@@ -1,4 +1,8 @@
 *.DS_Store
 .vscode
 /partumtestkit
+/partumtestkit.exe
+/result.json
+/build/
 *.o
+*.obj

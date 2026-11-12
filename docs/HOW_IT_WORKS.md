@@ -237,7 +237,11 @@ arrays always contain three entries in the real output.
 
 - POSIX builds need `pthread`; Linux builds may also need `-lm`.
 - Windows builds need `<windows.h>` and `<process.h>`; `_beginthreadex`
-  is used instead of `pthread_create`.
+  is used instead of `pthread_create`. Run `build.bat` from an x64 Native
+  Tools Command Prompt; it uses MSVC or falls back to `clang-cl`.
+- The GitHub Actions workflow in `.github/workflows/windows.yml` builds
+  the `.exe` on `windows-latest`, runs a quick smoke test and a full JSON
+  benchmark, validates the JSON, and uploads the executable as an artifact.
 - CPU names come from `sysctlbyname` on macOS, `/proc/cpuinfo` on Linux,
   and CPUID on Windows.
 - Logical core count comes from `sysconf(_SC_NPROCESSORS_ONLN)` on POSIX
